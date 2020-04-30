@@ -1,0 +1,14 @@
+.button {
+  background-color: Crimson;
+  border-radius: 5px;
+  color: white;
+  padding: 0.5em;
+  margin: 0.5em;
+  text-decoration: none;
+}
+
+.button:focus,
+.button:hover {
+  background-color: FireBrick;
+  color: White;
+}
