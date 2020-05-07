@@ -16,16 +16,15 @@ export default () => {
   const router = useRouter()
   const [postBody, setPostBody] = React.useState()
 
-  const api_host = process.env.NODE_ENV === 'production' ?
-    'https://api.byreference.engineer' :
-    'http://localhost:5001'
+  const api_host =
+    process.env.NODE_ENV === 'production'
+      ? 'https://api.byreference.engineer'
+      : 'http://localhost:5001'
 
   const submitCode = () =>
-    getJson(`${api_host}/api/container/run`).then(
-      (json) => {
-        console.log(json)
-      }
-    )
+    getJson(`${api_host}/api/container/run`).then((json) => {
+      console.log(json)
+    })
 
   const logoutUser = () => {
     fetch(`${api_host}/api/auth/logout`, {

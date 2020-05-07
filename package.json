@@ -7,6 +7,7 @@
     "build": "tailwindcss build styles/index.css -o styles/built_index.css && next build",
     "start": "pm2 start --name frontend './node_modules/next/dist/bin/next start'",
     "stop": "pm2 stop frontend && pm2 delete frontend",
+    "restart": "npm run build && npm run stop && npm run start",
     "lint": "prettier pages --write",
     "build:tailwind": "tailwindcss build styles/index.css -o styles/built_index.css",
     "init:tailwind": "tailwindcss init"

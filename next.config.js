@@ -18,7 +18,8 @@ module.exports = withTM({
       rule.issuer.include = [
         rule.issuer.include,
         // Allow `monaco-editor` to import global CSS:
-        /[\\/]node_modules[\\/]monaco-editor[\\/]/
+        /[\\/]node_modules[\\/]monaco-editor[\\/]/,
+        /[\\/]node_modules[\\/]react-toastify[\\/]/
       ];
     }
 

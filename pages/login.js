@@ -2,8 +2,8 @@ import Head from 'next/head'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import FormButton from '../components/FormButton'
-import { ToastContainer, toast } from 'react-toastify'
- 
+import { toast } from 'react-toastify'
+
 class LoginError extends Error {
   constructor({ message, status }) {
     super(message)
@@ -16,15 +16,16 @@ export default () => {
   const [password, setPassword] = useState()
   const router = useRouter()
 
-  const api_host = process.env.NODE_ENV === 'production' ?
-    'https://api.byreference.engineer' :
-    'http://localhost:5001'
+  const api_host =
+    process.env.NODE_ENV === 'production'
+      ? 'https://api.byreference.engineer'
+      : 'http://localhost:5001'
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (!email) toast('Please enter an email')
-    if (!password) toast('Please enter a password')
+    if (!email) toast('Please enter an email', { type: toast.TYPE.WARNING })
+    if (!password) toast('Please enter a password', { type: toast.TYPE.WARNING })
 
     fetch(`${api_host}/api/auth/login`, {
       method: 'POST',
@@ -35,23 +36,23 @@ export default () => {
       credentials: 'include',
       body: JSON.stringify({ email, password }),
     })
-    .then(async res => {
-      const body = await res.json()
-      console.log(body)
-      if (!res.ok || body.error) {
-        throw new LoginError({ status: res.status, message: body.message })
-      }
-      router.push('/dashboard')
-    })
-    .catch((err) => {
-      if (err instanceof LoginError) {
-        const { status, message } = err
-        console.log({ status, message })
-        if (status === 403) toast(message)
-      } else {
-        toast(err)
-      }
-    })
+      .then(async (res) => {
+        const body = await res.json()
+        console.log(body)
+        if (!res.ok || body.error) {
+          throw new LoginError({ status: res.status, message: body.message })
+        }
+        router.push('/dashboard')
+      })
+      .catch((err) => {
+        if (err instanceof LoginError) {
+          const { status, message } = err
+          console.log({ status, message })
+          if (status === 403) toast(message, { type: toast.TYPE.ERROR })
+        } else {
+          toast(err, { type: toast.TYPE.ERROR })
+        }
+      })
   }
 
   return (
@@ -60,23 +61,22 @@ export default () => {
         <title>Login Test Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={handleSubmit}>
         <label>
           Email:
-          <input type="text" onChange={ (e) => setEmail(e.target.value) } />
+          <input type="text" onChange={(e) => setEmail(e.target.value)} />
         </label>
         <br />
         <label>
           Password:
           <input
             type="password"
-            onChange={ (e) => setPassword(e.target.value) }
+            onChange={(e) => setPassword(e.target.value)}
           />
         </label>
         <br />
-        <FormButton/>
+        <FormButton />
       </form>
-      <ToastContainer position="bottom-center" hideProgressBar={true}/>
     </div>
   )
 }
