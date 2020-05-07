@@ -3,14 +3,14 @@ import React from 'react'
 import Link from 'next/link'
 import Button from '../components/Button'
 
-export default function Home() {
+export default () => {
   return (
+    // <body className="bg-gray-400">
     <div className="login-form">
       <Head>
         <title>Home Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Link href="/login" passHref>
         <Button name="login"></Button>
       </Link>
@@ -18,5 +18,6 @@ export default function Home() {
         <Button name="register"></Button>
       </Link>
     </div>
+    // </body>
   )
 }

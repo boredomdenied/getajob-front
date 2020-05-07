@@ -1,8 +1,17 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import FormButton from '../components/FormButton'
+import { toast, ToastContainer } from 'react-toastify'
 
-export default function Register() {
+class LoginError extends Error {
+  constructor({ message, status }) {
+    super(message)
+    this.status = status
+  }
+}
+
+export default () => {
   const [firstname, setFirstname] = useState()
   const [lastname, setLastname] = useState()
   const [email, setEmail] = useState()
@@ -12,10 +21,16 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!email) alert('fuck you put an email')
-    if (!password) alert('fuck you put an password')
+    if (!firstname) return toast('Please enter a firstname')
+    if (!lastname) return toast('Please enter a lastname')
+    if (!email) return toast('Please enter an email')
+    if (!password) return toast('Please enter a password')
 
-    const res = await fetch('http://localhost:5000/api/auth/register', {
+    const api_host = process.env.NODE_ENV === 'production' ?
+    'https://api.byreference.engineer' :
+    'http://localhost:5001'
+
+    fetch(`${api_host}/api/auth/register`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -24,10 +39,23 @@ export default function Register() {
       credentials: 'include',
       body: JSON.stringify({ firstname, lastname, email, password }),
     })
-
-    router.push('/dashboard')
-
-    console.log(await res.json())
+      .then(async (res) => {
+        const body = await res.json()
+        console.log(body)
+        if (!res.ok) {
+          throw new LoginError({ status: res.status, message: body.message })
+        }
+        router.push('/dashboard')
+      })
+      .catch((err) => {
+        if (err instanceof LoginError) {
+          const { status, message } = err
+          console.log({ status, message })
+          if (status === 403 || status === 500) toast(message)
+        } else {
+          toast('Something went wrong. Please try again')
+        }
+      })
   }
 
   return (
@@ -60,8 +88,9 @@ export default function Register() {
           />
         </label>
         <br />
-        <input type="submit" />
+        <FormButton />
       </form>
+      <ToastContainer />
     </div>
   )
 }

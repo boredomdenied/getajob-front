@@ -1,26 +1,53 @@
 import React from 'react'
 import useSWR from 'swr'
 import dynamic from 'next/dynamic'
+import Button from '../components/Button'
+import { useRouter } from 'next/router'
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false })
 
-const getJson = (url) => fetch(url, { credentials: 'include', headers: { Accept: 'application/json' }}).then((res) => res.json())
+const getJson = (url) =>
+  fetch(url, {
+    credentials: 'include',
+    headers: { Accept: 'application/json' },
+  }).then((res) => res.json())
 
 export default () => {
-  const [postBody, setPostBody] = React.useState();
+  const router = useRouter()
+  const [postBody, setPostBody] = React.useState()
 
-  const submitButton = () => getJson('http://localhost:5000/api/container/run').then((res) => {
-    console.log(res)
-  })
+  const api_host = process.env.NODE_ENV === 'production' ?
+    'https://api.byreference.engineer' :
+    'http://localhost:5001'
 
-  const { data, error } = useSWR('http://localhost:5000/user/dashboard', getJson)
+  const submitCode = () =>
+    getJson(`${api_host}/api/container/run`).then(
+      (json) => {
+        console.log(json)
+      }
+    )
+
+  const logoutUser = () => {
+    fetch(`${api_host}/api/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    })
+      .then((res) => res.json())
+      .then(console.log(data))
+      .then(router.push('/'))
+  }
+
+  const { data, error } = useSWR(`${api_host}/api/user/dashboard`, getJson)
 
   if (error) {
-    console.log(error)
+    console.error(error)
     return <div>failed to load</div>
   }
   if (!data) return <div>loading...</div>
-  console.log(data)
+  if (data.error) {
+    console.log(data)
+    return <div>{data.error}</div>
+  }
   return (
     <div>
       Hello {data.firstname}!
@@ -48,7 +75,8 @@ export default () => {
           }}
           onChange={setPostBody}
         />
-        <button onClick={submitButton}>Submit</button>
+        <Button onClick={submitCode} name="run" />
+        <Button onClick={logoutUser} name="logout" />
       </div>
     </div>
   )

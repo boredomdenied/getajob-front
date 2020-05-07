@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "next dev -p 3001",
+    "build": "tailwindcss build styles/index.css -o styles/built_index.css && next build",
+    "start": "pm2 start --name frontend './node_modules/next/dist/bin/next start'",
+    "stop": "pm2 stop frontend && pm2 delete frontend",
     "lint": "prettier pages --write",
-    "build:tailwind": "npx tailwindcss build styles/index.css -o styles/forCSSIntellisense.css",
-    "init:tailwind": "npx tailwindcss init"
+    "build:tailwind": "tailwindcss build styles/index.css -o styles/built_index.css",
+    "init:tailwind": "tailwindcss init"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -22,10 +23,12 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-monaco-editor": "0.36.0",
+    "react-toastify": "^6.0.0-rc.1",
     "swr": "^0.2.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "2.1.2",
+    "autoprefixer": "9.7.6",
     "next-transpile-modules": "3.3.0",
     "postcss-preset-env": "6.7.0",
     "prettier": "2.0.5",

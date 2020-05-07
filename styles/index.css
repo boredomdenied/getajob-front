@@ -3,7 +3,7 @@
 @tailwind components;
 /* purgecss end ignore */
 @tailwind utilities;
-.login-form {
+/* .login-form {
     width: 300px;
     margin: 0 auto;
     font-family: Tahoma, Geneva, sans-serif;
@@ -31,4 +31,8 @@
     cursor: pointer;
     font-weight: bold;
     color: #ffffff;
+} */
+body {
+    background-color: cadetblue;
 }
+
