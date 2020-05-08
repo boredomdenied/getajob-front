@@ -42,6 +42,7 @@ export default () => {
         if (!res.ok || body.error) {
           throw new LoginError({ status: res.status, message: body.message })
         }
+        toast('User logged in...', {type: toast.TYPE.SUCCESS})
         router.push('/dashboard')
       })
       .catch((err) => {
@@ -50,7 +51,7 @@ export default () => {
           console.log({ status, message })
           if (status === 403) toast(message, { type: toast.TYPE.ERROR })
         } else {
-          toast(err, { type: toast.TYPE.ERROR })
+          setTimeout(function(){toast(err, { type: toast.TYPE.ERROR }); }, 2000)
         }
       })
   }
