@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import FormButton from '../components/FormButton'
 import { toast } from 'react-toastify'
+import useSWR from 'swr'
 
 class LoginError extends Error {
   constructor({ message, status }) {
@@ -21,12 +22,32 @@ export default () => {
       ? 'https://api.byreference.engineer'
       : 'http://localhost:5001'
 
+
+      const getJson = (url) =>
+      fetch(url, {
+        credentials: 'include',
+        headers: { Accept: 'application/json' },
+      }).then((res) => res.json())
+    
+    const { data, error } = useSWR(`${api_host}/api/user/dashboard`, getJson)
+  
+    if (error) {
+      console.error(error)
+
+    }
+    if (!data) return <div>still loading from network...</div>    
+    if (!data.error) {
+      console.log(data)
+      router.push('/dashboard')
+    }
+    
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
     if (!email) toast('Please enter an email', { type: toast.TYPE.INFO })
     if (!password) toast('Please enter a password', { type: toast.TYPE.INFO })
-
+    
     fetch(`${api_host}/api/auth/login`, {
       method: 'POST',
       headers: {

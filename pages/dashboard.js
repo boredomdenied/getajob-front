@@ -1,4 +1,4 @@
-import  React, { useState }  from 'react'
+import React, { useState } from 'react'
 import useSWR from 'swr'
 import dynamic from 'next/dynamic'
 import Button from '../components/Button'
@@ -57,30 +57,30 @@ export default () => {
     )
   }
   return (
-    <div className="self-center text-center"><br></br>
-    Hello {data.firstname}!<br></br>
-      <div className="">
-        <div className="flex items-center justify-center">
-          <MonacoEditor
-            editorDidMount={() => {
-              window.MonacoEnvironment.getWorkerUrl = (_moduleId, label) => {
-                if (label === 'json') return '_next/static/json.worker.js'
-                if (label === 'css') return '_next/static/css.worker.js'
-                if (label === 'html') return '_next/static/html.worker.js'
-                if (label === 'typescript' || label === 'javascript')
-                  return '_next/static/ts.worker.js'
-                return '_next/static/editor.worker.js'
-              }
-            }}
-            width="720"
-            height='300'
-            language="typescript"
-            theme="vs"
-            value={postBody}
-            options={{ minimap: { enabled: false } }}
-            onChange={setPostBody}
-          />
-        </div>
+    <div>
+      <div className="p-4 text-center">Hello {data.firstname}!</div>
+      <div className="flex items-center justify-center">
+        <MonacoEditor
+          editorDidMount={() => {
+            window.MonacoEnvironment.getWorkerUrl = (_moduleId, label) => {
+              if (label === 'json') return '_next/static/json.worker.js'
+              if (label === 'css') return '_next/static/css.worker.js'
+              if (label === 'html') return '_next/static/html.worker.js'
+              if (label === 'typescript' || label === 'javascript')
+                return '_next/static/ts.worker.js'
+              return '_next/static/editor.worker.js'
+            }
+          }}
+          width="720"
+          height="300"
+          language="typescript"
+          theme="vs"
+          value={postBody}
+          options={{ minimap: { enabled: false } }}
+          onChange={setPostBody}
+        />
+      </div>
+      <div className="p-2 text-center">
         <Button onClick={submitCode} name="run" />
         <Button onClick={logoutUser} name="logout" />
       </div>

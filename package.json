@@ -24,7 +24,8 @@
     "react-dom": "16.13.1",
     "react-monaco-editor": "0.36.0",
     "react-toastify": "^6.0.0-rc.1",
-    "swr": "^0.2.0"
+    "swr": "^0.2.0",
+    "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "2.1.2",
