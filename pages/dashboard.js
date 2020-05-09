@@ -31,7 +31,7 @@ export default () => {
       method: 'POST',
       credentials: 'include',
     })
-      .then((res) => console.log(res.json()))
+      .then(res => console.log(res.json()))
       .then(router.push('/'))
   }
 
@@ -47,7 +47,7 @@ export default () => {
     return <div>{data.error}</div>
   }
   return (
-    <div className="relative h-32 p-12 absolute inset-0 sm:bottom-0 sm:left-0 md:top-0 md:inset-x-0 lg:right-0 lg:inset-y-0 xl:bottom-0 xl:inset-x-0">
+    <div>
       Hello {data.firstname}!<br></br>
       <div>
         <MonacoEditor
