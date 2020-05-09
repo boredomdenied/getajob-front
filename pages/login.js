@@ -12,8 +12,8 @@ class LoginError extends Error {
 }
 
 export default () => {
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  let [email, setEmail] = useState()
+  let [password, setPassword] = useState()
   const router = useRouter()
 
   const api_host =
@@ -51,9 +51,7 @@ export default () => {
           console.log({ status, message })
           if (status === 403) toast(message, { type: toast.TYPE.WARNING })
         } else {
-          setTimeout(function () {
             toast(err, { type: toast.TYPE.WARNING })
-          }, 2000)
         }
       })
   }

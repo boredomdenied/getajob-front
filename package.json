@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
+    "devstop": "kill -9 $(lsof -i :5001 | tail -1 | awk '{print $2}')",
     "build": "next build",
     "start": "pm2 start --name frontend './node_modules/next/dist/bin/next start'",
     "stop": "pm2 stop frontend && pm2 delete frontend",

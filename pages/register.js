@@ -12,10 +12,10 @@ class LoginError extends Error {
 }
 
 export default () => {
-  const [firstname, setFirstname] = useState()
-  const [lastname, setLastname] = useState()
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  let [firstname, setFirstname] = useState()
+  let [lastname, setLastname] = useState()
+  let [email, setEmail] = useState()
+  let [password, setPassword] = useState()
   const router = useRouter()
 
   const handleSubmit = async (e) => {
