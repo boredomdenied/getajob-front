@@ -45,12 +45,12 @@ export default () => {
   if (!data) return <div>loading...</div>
   if (data.error) {
     console.log(data)
-    return <div>{data.error}</div>
+    return <div>{ data.error }</div>
   }
   return (
-    <div>
-      Hello {data.firstname}!
-      <div>
+    <div className="relative h-32 p-12 absolute inset-0 sm:bottom-0 sm:left-0 md:top-0 md:inset-x-8 lg:right-0 lg:inset-y-0 xl:bottom-0 xl:inset-x-12">
+    Hello { data.firstname }!<br></br>
+      <div className="">
         <MonacoEditor
           editorDidMount={() => {
             window.MonacoEnvironment.getWorkerUrl = (_moduleId, label) => {
@@ -62,20 +62,18 @@ export default () => {
               return '_next/static/editor.worker.js'
             }
           }}
-          width="800"
+          width="720"
           height="600"
           language="typescript"
-          theme="vs-dark"
-          value={postBody}
-          options={{
-            minimap: {
-              enabled: false,
-            },
-          }}
-          onChange={setPostBody}
+          theme="vs"
+          value={ postBody }
+          options={ { minimap: { enabled: false },} }
+          onChange={ setPostBody }
+          acceptSuggestionOnEnter="on"
+          dragAndDrop="true"
         />
-        <Button onClick={submitCode} name="run" />
-        <Button onClick={logoutUser} name="logout" />
+        <Button onClick={ submitCode } name="run" />
+        <Button onClick={ logoutUser } name="logout" />
       </div>
     </div>
   )
