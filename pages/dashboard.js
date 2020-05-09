@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import dynamic from 'next/dynamic'
 import Button from '../components/Button'
 import { useRouter } from 'next/router'
@@ -31,7 +31,10 @@ export default () => {
       method: 'POST',
       credentials: 'include',
     })
-      .then((res) => console.log(res.json()))
+      .then(res => {
+        console.log(res.json())
+        mutate(`${api_host}/api/user/dashboard`, null)
+      })
       .then(router.push('/'))
   }
 

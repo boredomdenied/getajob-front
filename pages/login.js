@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import FormButton from '../components/FormButton'
 import { toast } from 'react-toastify'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 class LoginError extends Error {
   constructor({ message, status }) {
@@ -28,9 +28,8 @@ export default () => {
         credentials: 'include',
         headers: { Accept: 'application/json' },
       }).then((res) => res.json())
-    
+
     const { data, error } = useSWR(`${api_host}/api/user/dashboard`, getJson)
-  
     if (error) {
       console.error(error)
 
