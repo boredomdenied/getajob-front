@@ -31,7 +31,7 @@ export default () => {
       method: 'POST',
       credentials: 'include',
     })
-      .then(res => console.log(res.json()))
+      .then((res) => console.log(res.json()))
       .then(router.push('/'))
   }
 
@@ -49,26 +49,28 @@ export default () => {
   return (
     <div>
       Hello {data.firstname}!<br></br>
-      <div>
-        <MonacoEditor
-          editorDidMount={() => {
-            window.MonacoEnvironment.getWorkerUrl = (_moduleId, label) => {
-              if (label === 'json') return '_next/static/json.worker.js'
-              if (label === 'css') return '_next/static/css.worker.js'
-              if (label === 'html') return '_next/static/html.worker.js'
-              if (label === 'typescript' || label === 'javascript')
-                return '_next/static/ts.worker.js'
-              return '_next/static/editor.worker.js'
-            }
-          }}
-          width="720"
-          height="600"
-          language="typescript"
-          theme="vs"
-          value={postBody}
-          options={{ minimap: { enabled: false } }}
-          onChange={setPostBody}
-        />
+      {/* <div> */}
+        <div className="flex items-center justify-center">
+          <MonacoEditor
+            editorDidMount={() => {
+              window.MonacoEnvironment.getWorkerUrl = (_moduleId, label) => {
+                if (label === 'json') return '_next/static/json.worker.js'
+                if (label === 'css') return '_next/static/css.worker.js'
+                if (label === 'html') return '_next/static/html.worker.js'
+                if (label === 'typescript' || label === 'javascript')
+                  return '_next/static/ts.worker.js'
+                return '_next/static/editor.worker.js'
+              }
+            }}
+            width="720"
+            height="600"
+            language="typescript"
+            theme="vs"
+            value={postBody}
+            options={{ minimap: { enabled: false } }}
+            onChange={setPostBody}
+          />
+        {/* </div> */}
         <Button onClick={submitCode} name="run" />
         <Button onClick={logoutUser} name="logout" />
       </div>
