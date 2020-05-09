@@ -9,6 +9,8 @@ module.exports = {
               './pages/**/*.{js,jsx,ts,tsx}',
               './components/**/*.{js,jsx,ts,tsx}'
             ],
+            whitelistPatterns: [/^monaco/],
+            whitelistPatterns: [/^react-monaco/],
             whitelistPatterns: [/^Toastify__/],
             defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
           },

@@ -31,8 +31,7 @@ export default () => {
       method: 'POST',
       credentials: 'include',
     })
-      .then((res) => res.json())
-      .then(console.log(data))
+      .then((res) => console.log(res.json()))
       .then(router.push('/'))
   }
 
@@ -45,12 +44,12 @@ export default () => {
   if (!data) return <div>loading...</div>
   if (data.error) {
     console.log(data)
-    return <div>{ data.error }</div>
+    return <div>{data.error}</div>
   }
   return (
-    <div className="relative h-32 p-12 absolute inset-0 sm:bottom-0 sm:left-0 md:top-0 md:inset-x-8 lg:right-0 lg:inset-y-0 xl:bottom-0 xl:inset-x-12">
-    Hello { data.firstname }!<br></br>
-      <div className="">
+    <div className="relative h-32 p-12 absolute inset-0 sm:bottom-0 sm:left-0 md:top-0 md:inset-x-0 lg:right-0 lg:inset-y-0 xl:bottom-0 xl:inset-x-0">
+      Hello {data.firstname}!<br></br>
+      <div>
         <MonacoEditor
           editorDidMount={() => {
             window.MonacoEnvironment.getWorkerUrl = (_moduleId, label) => {
@@ -66,14 +65,12 @@ export default () => {
           height="600"
           language="typescript"
           theme="vs"
-          value={ postBody }
-          options={ { minimap: { enabled: false },} }
-          onChange={ setPostBody }
-          acceptSuggestionOnEnter="on"
-          dragAndDrop="true"
+          value={postBody}
+          options={{ minimap: { enabled: false } }}
+          onChange={setPostBody}
         />
-        <Button onClick={ submitCode } name="run" />
-        <Button onClick={ logoutUser } name="logout" />
+        <Button onClick={submitCode} name="run" />
+        <Button onClick={logoutUser} name="logout" />
       </div>
     </div>
   )

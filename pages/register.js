@@ -21,10 +21,13 @@ export default () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!firstname) return toast('Please enter a firstname', { type: toast.TYPE.WARNING })
-    if (!lastname) return toast('Please enter a lastname', { type: toast.TYPE.WARNING })
-    if (!email) return toast('Please enter an email', { type: toast.TYPE.WARNING })
-    if (!password) return toast('Please enter a password', { type: toast.TYPE.WARNING })
+    if (!firstname)
+      return toast('Please enter a firstname', { type: toast.TYPE.INFO })
+    if (!lastname)
+      return toast('Please enter a lastname', { type: toast.TYPE.INFO })
+    if (!email) return toast('Please enter an email', { type: toast.TYPE.INFO })
+    if (!password)
+      return toast('Please enter a password', { type: toast.TYPE.INFO })
 
     const api_host =
       process.env.NODE_ENV === 'production'
@@ -46,15 +49,19 @@ export default () => {
         if (!res.ok) {
           throw new LoginError({ status: res.status, message: body.message })
         }
+        toast('User logged in...', { type: toast.TYPE.SUCCESS })
         router.push('/dashboard')
       })
       .catch((err) => {
         if (err instanceof LoginError) {
           const { status, message } = err
           console.log({ status, message })
-          if (status === 403 || status === 500) toast(message, { type: toast.TYPE.ERROR })
+          if (status === 403 || status === 500)
+            toast(message, { type: toast.TYPE.WARNING })
         } else {
-          toast('Something went wrong. Please try again', { type: toast.TYPE.ERROR })
+          toast('Something went wrong. Please try again', {
+            type: toast.TYPE.WARNING,
+          })
         }
       })
   }

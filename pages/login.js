@@ -24,8 +24,8 @@ export default () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (!email) toast('Please enter an email', { type: toast.TYPE.WARNING })
-    if (!password) toast('Please enter a password', { type: toast.TYPE.WARNING })
+    if (!email) toast('Please enter an email', { type: toast.TYPE.INFO })
+    if (!password) toast('Please enter a password', { type: toast.TYPE.INFO })
 
     fetch(`${api_host}/api/auth/login`, {
       method: 'POST',
@@ -42,16 +42,18 @@ export default () => {
         if (!res.ok || body.error) {
           throw new LoginError({ status: res.status, message: body.message })
         }
-        toast('User logged in...', {type: toast.TYPE.SUCCESS})
+        toast('User logged in...', { type: toast.TYPE.SUCCESS })
         router.push('/dashboard')
       })
       .catch((err) => {
         if (err instanceof LoginError) {
           const { status, message } = err
           console.log({ status, message })
-          if (status === 403) toast(message, { type: toast.TYPE.ERROR })
+          if (status === 403) toast(message, { type: toast.TYPE.WARNING })
         } else {
-          setTimeout(function(){toast(err, { type: toast.TYPE.ERROR }); }, 2000)
+          setTimeout(function () {
+            toast(err, { type: toast.TYPE.WARNING })
+          }, 2000)
         }
       })
   }
