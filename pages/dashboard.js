@@ -16,8 +16,12 @@ const getJson = (url) =>
 
 export default () => {
 
+  const router = useRouter()
+  const [postBody, setPostBody] = React.useState()
+  const [isMobile, setIsMobile] = React.useState(false)
+
   useEffect(() => {
-    var isMobile = false //initiate as false
+    // var isMobile = false //initiate as false
     // device detection
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
@@ -27,12 +31,8 @@ export default () => {
         navigator.userAgent.substr(0, 4)
       )
     ) {
-      isMobile = true
+      setIsMobile = true
     } }, [])
-
-  const router = useRouter()
-  const [postBody, setPostBody] = React.useState()
-  const [isMobile, setIsMobile] = React.useState(false)
 
   const api_host =
     process.env.NODE_ENV === 'production'
