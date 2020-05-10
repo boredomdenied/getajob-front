@@ -19,8 +19,9 @@ export default () => {
 
   return (
     <div>
-      <div className="p-4 text-center"></div>
-      <div className="p-6 text-center">Login or Register</div>
+      <div className="p-4"></div>
+      <div className="p-4 block text-gray-800 text-2xl text-center font-bold mb-2">
+        Please login or register to continue</div>
       <div className="text-center">
         <div className="login-form">
           <Head>

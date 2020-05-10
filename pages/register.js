@@ -67,24 +67,25 @@ export default () => {
   }
 
   return (
-    <div className="p-24 flex justify-center w-full">
+    <div className="p-12 flex justify-center w-full">
       <Head>
         <title>Login Test Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <form onSubmit={handleSubmit}>
-        <div className="block text-gray-800 text-lg font-bold mb-2">
-          Fill out all fields before submission
+        <div className="block text-gray-800 text-2xl font-bold mb-2">
+        <p></p>Fill out all fields to register
         </div>
+        
         <div className="m-8"></div>
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Firstname
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight 
-          shadow-outline"
+            className="shadow appearance-none border rounded w-full py-3
+            px-4 text-gray-700 leading-tight shadow-outline"
             onChange={(e) => setFirstname(e.target.value)}
           />
           <div className="m-6"></div>
@@ -92,8 +93,8 @@ export default () => {
             Lastname
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight 
-          shadow-outline"
+            className="shadow appearance-none border rounded w-full py-3
+            px-4 text-gray-700 leading-tight shadow-outline"
             onChange={(e) => setLastname(e.target.value)}
           />
           <div className="m-6"></div>
@@ -101,8 +102,8 @@ export default () => {
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight 
-          shadow-outline"
+            className="shadow appearance-none border rounded w-full py-3
+            px-4 text-gray-700 leading-tight shadow-outline"
             onChange={(e) => setEmail(e.target.value)}
           />
           <div className="m-6"></div>
@@ -110,8 +111,8 @@ export default () => {
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight 
-          shadow-outline"
+            className="shadow appearance-none border rounded w-full py-3
+            px-4 text-gray-700 leading-tight shadow-outline"
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="p-2 text-center"></div>
