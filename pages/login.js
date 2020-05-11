@@ -22,13 +22,18 @@ export default () => {
       ? 'https://api.byreference.engineer'
       : 'http://localhost:5001'
 
+      const web_host =
+      process.env.NODE_ENV === 'production'
+        ? 'https://byreference.engineer'
+        : 'http://localhost:3001'
+
   const getJson = (url) =>
     fetch(url, {
       credentials: 'include',
       headers: { Accept: 'application/json' },
     }).then((res) => res.json())
 
-  const { data, error } = useSWR(`${api_host}/dashboard`, getJson)
+  const { data, error } = useSWR(`${api_host}/api/user/dashboard`, getJson)
   if (error) {
     console.error(error)
   }
@@ -83,7 +88,7 @@ export default () => {
       <form onSubmit={handleSubmit}>
         <div>
           <div className="block text-gray-800 text-2xl font-bold mb-2">
-            Fill out all fields to register
+            Fill out all fields to login
           </div>
           <div className="block text-gray-800 text-lg font-bold mb-2">
             <div className="m-8"></div>
@@ -108,7 +113,7 @@ export default () => {
               <br />
               <div className="p-2 text-center"></div>
               <FormButton />
-              <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+              <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
         Forgot Password?
       </a>
             </div>
