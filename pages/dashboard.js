@@ -15,6 +15,7 @@ const getJson = (url) =>
 export default () => {
   const router = useRouter()
   const [postBody, setPostBody] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState()
 
   const api_host =
     process.env.NODE_ENV === 'production'
@@ -32,6 +33,7 @@ export default () => {
       credentials: 'include',
     })
       .then(res => {
+
         console.log(res.json())
         mutate(`${api_host}/api/user/dashboard`, null)
       })

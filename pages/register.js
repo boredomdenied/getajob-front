@@ -49,8 +49,8 @@ export default () => {
         if (!res.ok) {
           throw new LoginError({ status: res.status, message: body.message })
         }
-        toast('User logged in...', { type: toast.TYPE.SUCCESS })
-        router.push('/dashboard')
+        toast('An email has been sent. Please check your mailbox to confirm user account.', { type: toast.TYPE.SUCCESS })
+        // router.push('/dashboard')
       })
       .catch((err) => {
         if (err instanceof LoginError) {

@@ -28,7 +28,7 @@ export default () => {
       headers: { Accept: 'application/json' },
     }).then((res) => res.json())
 
-  const { data, error } = useSWR(`${api_host}/api/user/dashboard`, getJson)
+  const { data, error } = useSWR(`${api_host}/dashboard`, getJson)
   if (error) {
     console.error(error)
   }
@@ -108,6 +108,9 @@ export default () => {
               <br />
               <div className="p-2 text-center"></div>
               <FormButton />
+              <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+        Forgot Password?
+      </a>
             </div>
           </div>
         </div>
