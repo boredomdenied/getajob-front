@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import FormButton from '../components/FormButton'
 import { toast } from 'react-toastify'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 
 class LoginError extends Error {
   constructor({ message, status }) {
@@ -22,11 +22,6 @@ export default () => {
       ? 'https://api.byreference.engineer'
       : 'http://localhost:5001'
 
-      const web_host =
-      process.env.NODE_ENV === 'production'
-        ? 'https://byreference.engineer'
-        : 'http://localhost:3001'
-
   const getJson = (url) =>
     fetch(url, {
       credentials: 'include',
@@ -43,11 +38,43 @@ export default () => {
     router.push('/dashboard')
   }
 
+  const handleForgotPasswordClicked = (e) => {
+    e.preventDefault()
+    if (!email) toast('Please enter your email', { type: toast.TYPE.INFO })
+    fetch(`${api_host}/api/user/reset`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ email, password }),
+    })
+      .then(async (res) => {
+        const body = await res.json()
+        console.log(body)
+        if (!res.ok || body.error) {
+          throw new LoginError({ status: res.status, message: body.message })
+        }
+        toast('A verification email has been sent. Check your inbox or spam', { type: toast.TYPE.SUCCESS })
+        // router.push('/dashboard')
+      })
+      .catch((err) => {
+        if (err instanceof LoginError) {
+          const { status, message } = err
+          console.log({ status, message })
+          if (status === 403) toast(message, { type: toast.TYPE.WARNING })
+        } else {
+          toast(err, { type: toast.TYPE.WARNING })
+        }
+      }) 
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (!email) toast('Please enter an email', { type: toast.TYPE.INFO })
-    if (!password) toast('Please enter a password', { type: toast.TYPE.INFO })
+    if (!email) toast('Please enter your email', { type: toast.TYPE.INFO })
+    if (!password) toast('Please enter your password', { type: toast.TYPE.INFO })
 
     fetch(`${api_host}/api/auth/login`, {
       method: 'POST',
@@ -113,9 +140,12 @@ export default () => {
               <br />
               <div className="p-2 text-center"></div>
               <FormButton />
-              <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-        Forgot Password?
-      </a>
+              <a
+                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                onClick={handleForgotPasswordClicked}
+              >
+                Forgot Password?
+              </a>
             </div>
           </div>
         </div>
