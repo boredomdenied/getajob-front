@@ -50,14 +50,20 @@ export default () => {
           console.log('inside res.ok error')
           throw new LoginError({ status: res.status, message: body.message })
         }
-        toast('An email has been sent. Please check your mailbox to confirm user account.', { type: toast.TYPE.SUCCESS })
+        toast(
+          'An email has been sent. Please check your mailbox to confirm user account.',
+          { type: toast.TYPE.SUCCESS }
+        )
       })
       .catch((err) => {
         if (err instanceof LoginError) {
           const { status, message } = err
           console.log({ status, message })
           if (status === 403 || status === 500)
-            toast("An error occured sending an email to this user. Please try a different email for registration", { type: toast.TYPE.WARNING })
+            toast(
+              'An error occured sending an email to this user. Please try a different email for registration',
+              { type: toast.TYPE.WARNING }
+            )
         } else {
           console.error(err)
           toast('Something went wrong. Please try again', {
@@ -65,8 +71,7 @@ export default () => {
           })
         }
       })
-    }
-  
+  }
 
   return (
     <div className="p-12 flex justify-center w-full">
@@ -77,9 +82,9 @@ export default () => {
 
       <form onSubmit={handleSubmit}>
         <div className="block text-gray-800 text-2xl font-bold mb-2">
-        <p></p>Fill out all fields to register
+          <p></p>Fill out all fields to register
         </div>
-        
+
         <div className="m-8"></div>
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">

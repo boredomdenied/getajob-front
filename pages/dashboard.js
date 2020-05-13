@@ -3,6 +3,14 @@ import useSWR, { mutate } from 'swr'
 import dynamic from 'next/dynamic'
 import Button from '../components/Button'
 import { useRouter } from 'next/router'
+import { css } from '@emotion/core'
+import RingLoader from 'react-spinners/RingLoader'
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  // border-color: red;
+`
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false })
 
@@ -13,6 +21,7 @@ const getJson = (url) =>
   }).then((res) => res.json())
 
 export default () => {
+  const [loading, setLoading] = useState()
   const router = useRouter()
   const [postBody, setPostBody] = useState()
   const [isLoggedIn, setIsLoggedIn] = useState()
@@ -32,8 +41,7 @@ export default () => {
       method: 'POST',
       credentials: 'include',
     })
-      .then(res => {
-
+      .then((res) => {
         console.log(res.json())
         mutate(`${api_host}/api/user/dashboard`, null)
       })
@@ -51,16 +59,27 @@ export default () => {
       </div>
     )
   }
-  if (!data) return <div>still loading from network...</div>
-  if (data.error) {
-    console.log(data)
+  if (!data)
     return (
       <div className="flex p-24 items-center justify-center">
-        It looks like something went wrong on our end. Please try again in a
-        moment...
+        <RingLoader
+          css={override}
+          sizeUnit={'px'}
+          size={50}
+          color={'#123abc'}
+          // loading={loading}
+        />
       </div>
     )
-  }
+  // if (data.error) {
+  //   console.log(data)
+  //   return (
+  //     <div className="flex p-24 items-center justify-center">
+  //       It looks like something went wrong on our end. Please try again in a
+  //       moment...
+  //     </div>
+  //   )
+  // }
   return (
     <div>
       <div className="p-4 text-center">Hello {data.firstname}!</div>

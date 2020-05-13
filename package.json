@@ -9,7 +9,7 @@
     "start": "pm2 start --name frontend './node_modules/next/dist/bin/next start'",
     "stop": "pm2 stop frontend && pm2 delete frontend",
     "restart": "npm run build && npm run stop && npm run start",
-    "lint": "prettier pages --write"
+    "lint": "prettier pages components --write"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -24,6 +24,7 @@
     "react-device-detect": "^1.12.1",
     "react-dom": "16.13.1",
     "react-monaco-editor": "0.36.0",
+    "react-spinners": "^0.8.3",
     "react-toastify": "^6.0.0-rc.1",
     "swr": "^0.2.0",
     "universal-cookie": "^4.0.3"

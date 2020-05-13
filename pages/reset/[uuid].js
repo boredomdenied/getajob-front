@@ -18,14 +18,15 @@ export default () => {
   const { uuid } = router.query
 
   const api_host =
-  process.env.NODE_ENV === 'production'
-    ? 'https://api.byreference.engineer'
-    : 'http://localhost:5001'
+    process.env.NODE_ENV === 'production'
+      ? 'https://api.byreference.engineer'
+      : 'http://localhost:5001'
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (!password) toast('Please enter your password', { type: toast.TYPE.INFO })
+    if (!password)
+      toast('Please enter your password', { type: toast.TYPE.INFO })
     fetch(`${api_host}/api/user/reset/${uuid}`, {
       method: 'POST',
       headers: {
@@ -55,7 +56,6 @@ export default () => {
         }
       })
   }
-
 
   return (
     <div className="p-12 flex justify-center w-full">

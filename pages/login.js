@@ -4,7 +4,14 @@ import { useRouter } from 'next/router'
 import FormButton from '../components/FormButton'
 import { toast } from 'react-toastify'
 import useSWR from 'swr'
+import { css } from '@emotion/core'
+import RingLoader from 'react-spinners/RingLoader'
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  // border-color: red;
+`
 class LoginError extends Error {
   constructor({ message, status }) {
     super(message)
@@ -32,8 +39,19 @@ export default () => {
   if (error) {
     console.error(error)
   }
-  if (!data) return <div>still loading from network...</div>
-  if (!data.error) {
+  if (!data)
+    return (
+      <div className="flex p-24 items-center justify-center">
+        <RingLoader
+          css={override}
+          sizeUnit={'px'}
+          size={50}
+          color={'#123abc'}
+          // loading={loading}
+        />
+      </div>
+    )
+      if (!data.error) {
     console.log(data)
     router.push('/dashboard')
   }
@@ -56,7 +74,9 @@ export default () => {
         if (!res.ok || body.error) {
           throw new LoginError({ status: res.status, message: body.message })
         }
-        toast('A verification email has been sent. Check your inbox or spam', { type: toast.TYPE.SUCCESS })
+        toast('A verification email has been sent. Check your inbox or spam', {
+          type: toast.TYPE.SUCCESS,
+        })
         // router.push('/dashboard')
       })
       .catch((err) => {
@@ -67,14 +87,15 @@ export default () => {
         } else {
           toast(err, { type: toast.TYPE.WARNING })
         }
-      }) 
+      })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     if (!email) toast('Please enter your email', { type: toast.TYPE.INFO })
-    if (!password) toast('Please enter your password', { type: toast.TYPE.INFO })
+    if (!password)
+      toast('Please enter your password', { type: toast.TYPE.INFO })
 
     fetch(`${api_host}/api/auth/login`, {
       method: 'POST',
@@ -91,7 +112,7 @@ export default () => {
         if (!res.ok || body.error) {
           throw new LoginError({ status: res.status, message: body.message })
         }
-        toast('User logged in...', { type: toast.TYPE.SUCCESS })
+        // toast('User logged in...', { type: toast.TYPE.SUCCESS })
         router.push('/dashboard')
       })
       .catch((err) => {

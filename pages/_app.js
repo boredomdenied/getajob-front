@@ -4,7 +4,6 @@ import { AppProps } from 'next/app'
 import { ToastContainer, Slide } from 'react-toastify'
 
 const MyApp = ({ Component, pageProps }) => {
-
   return (
     <>
       <Component {...pageProps} />
