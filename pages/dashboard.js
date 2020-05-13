@@ -21,7 +21,6 @@ const getJson = (url) =>
   }).then((res) => res.json())
 
 export default () => {
-  const [loading, setLoading] = useState()
   const router = useRouter()
   const [postBody, setPostBody] = useState()
   const [isLoggedIn, setIsLoggedIn] = useState()
