@@ -44,9 +44,10 @@ export default () => {
       body: JSON.stringify({ firstname, lastname, email, password }),
     })
       .then(async (res) => {
+        console.log(res)
         const body = await res.json()
-        console.log(body)
-        if (!res.ok) {
+        if (!res.ok || body.error) {
+          console.log('inside res.ok error')
           throw new LoginError({ status: res.status, message: body.message })
         }
         toast('An email has been sent. Please check your mailbox to confirm user account.', { type: toast.TYPE.SUCCESS })
@@ -56,14 +57,16 @@ export default () => {
           const { status, message } = err
           console.log({ status, message })
           if (status === 403 || status === 500)
-            toast(message, { type: toast.TYPE.WARNING })
+            toast("An error occured sending an email to this user. Please try a different email for registration", { type: toast.TYPE.WARNING })
         } else {
+          console.error(err)
           toast('Something went wrong. Please try again', {
             type: toast.TYPE.WARNING,
           })
         }
       })
-  }
+    }
+  
 
   return (
     <div className="p-12 flex justify-center w-full">
