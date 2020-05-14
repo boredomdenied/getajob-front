@@ -45,9 +45,8 @@ export default () => {
         <RingLoader
           css={override}
           sizeUnit={'px'}
-          size={50}
+          size={75}
           color={'#123abc'}
-          // loading={loading}
         />
       </div>
     )

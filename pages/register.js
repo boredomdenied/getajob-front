@@ -46,7 +46,6 @@ export default () => {
         console.log(res)
         const body = await res.json()
         if (!res.ok || body.error) {
-          console.log('inside res.ok error')
           throw new LoginError({ status: res.status, message: body.message })
         }
         toast(
@@ -116,7 +115,8 @@ export default () => {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Password
           </label>
-          <input type="password"
+          <input
+            type="password"
             className="shadow appearance-none border rounded w-full py-3
             px-4 text-gray-700 leading-tight shadow-outline"
             onChange={(e) => setPassword(e.target.value)}
