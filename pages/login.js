@@ -50,14 +50,14 @@ export default () => {
         />
       </div>
     )
-      if (!data.error) {
+  if (!data.error) {
     console.log(data)
     router.push('/dashboard')
   }
 
   const handleForgotPasswordClicked = (e) => {
     e.preventDefault()
-        router.push('/verify')
+    router.push('/verify')
   }
 
   const handleSubmit = (e) => {
