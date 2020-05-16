@@ -45,13 +45,14 @@ export default () => {
     })
       .then(async (res) => {
         const body = await res.json()
-        if (!res.ok || body.error) {
-          console.log(body.error)
+        if (body.error || !res.ok) {
+          console.log(body.error || res.ok)
         }
+        toast(res, { type: toast.TYPE.SUCCESS })
         setHasContainer(true)
       })
       .catch((err) => {
-        console.log({ err })
+        console.log(err)
       })
   }
 
@@ -154,7 +155,7 @@ export default () => {
         />
       </div>
       <div className="p-2 text-center">
-        <Button onClick={hasContainer && submitCode} name="run" />
+        <Button onClick={hasContainer ? submitCode : undefined} name="run" />
         <Button onClick={logoutUser} name="logout" />
       </div>
     </div>

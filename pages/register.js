@@ -15,6 +15,7 @@ export default () => {
   let [firstname, setFirstname] = useState()
   let [lastname, setLastname] = useState()
   let [email, setEmail] = useState()
+  let [username, setUsername] = useState()
   let [password, setPassword] = useState()
 
   const handleSubmit = async (e) => {
@@ -25,9 +26,10 @@ export default () => {
     if (!lastname)
       return toast('Please enter a lastname', { type: toast.TYPE.INFO })
     if (!email) return toast('Please enter an email', { type: toast.TYPE.INFO })
+    if (!username)
+      return toast('Please enter a username', { type: toast.TYPE.INFO })
     if (!password)
       return toast('Please enter a password', { type: toast.TYPE.INFO })
-
     const api_host =
       process.env.NODE_ENV === 'production'
         ? 'https://api.byreference.engineer'
@@ -40,7 +42,7 @@ export default () => {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ firstname, lastname, email, password }),
+      body: JSON.stringify({ firstname, lastname, email, password, username }),
     })
       .then(async (res) => {
         console.log(res)
@@ -58,10 +60,7 @@ export default () => {
           const { status, message } = err
           console.log({ status, message })
           if (status === 403 || status === 500)
-            toast(
-              'An error occured sending an email to this user. Please try a different email for registration',
-              { type: toast.TYPE.WARNING }
-            )
+            toast(message, { type: toast.TYPE.WARNING })
         } else {
           console.error(err)
           toast('Something went wrong. Please try again', {
@@ -110,6 +109,15 @@ export default () => {
             className="shadow appearance-none border rounded w-full py-3
             px-4 text-gray-700 leading-tight shadow-outline"
             onChange={(e) => setEmail(e.target.value)}
+          />
+          <div className="m-6"></div>
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Username
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-3
+            px-4 text-gray-700 leading-tight shadow-outline"
+            onChange={(e) => setUsername(e.target.value)}
           />
           <div className="m-6"></div>
           <label className="block text-gray-700 text-sm font-bold mb-2">
